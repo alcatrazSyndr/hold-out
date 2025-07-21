@@ -4,6 +4,8 @@ namespace HoldOut
 {
     public abstract class ManagerBase : MonoBehaviour
     {
+        public virtual bool Ready => false;
+
         public abstract void Initialize();
     }
 
@@ -17,15 +19,9 @@ namespace HoldOut
                 return _instance;
             }
         }
-        protected static bool _isInitialized = false;
-        protected static bool _isSetup = false;
-        public static bool Ready
-        {
-            get
-            {
-                return _instance != null && _isInitialized && _isSetup; 
-            }
-        }
+        protected bool _isInitialized = false;
+        protected bool _isSetup = false;
+        public override bool Ready => _instance != null && _isInitialized && _isSetup;
 
         public override void Initialize()
         {
@@ -33,18 +29,19 @@ namespace HoldOut
             {
                 _instance = this as T;
                 DontDestroyOnLoad(gameObject);
+                _isInitialized = true;
                 Setup();
             }
             else
             {
-                _instance = null;
+                Debug.LogWarning($"Duplicate manager of type:{GetType()} found! Destroying newest!", this);
                 DestroyImmediate(gameObject);
             }
         }
 
         protected virtual void Setup()
         {
-            Debug.Log($"Manager of type:{GetType()} succesfully initialized!", this);
+            //Debug.Log($"Manager of type:{GetType()} succesfully initialized!", this);
         }
     }
 }

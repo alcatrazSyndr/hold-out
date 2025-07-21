@@ -5,6 +5,8 @@ namespace HoldOut
         protected override void Setup()
         {
             base.Setup();
+
+            _isSetup = true;
         }
     }
 }
