@@ -15,7 +15,7 @@ namespace HoldOut
             }
         }
 
-        #region Setup / Game Initialization
+        #region Setup
 
         protected override void Setup()
         {
@@ -23,23 +23,43 @@ namespace HoldOut
 
             if (EventManager.Instance != null && EventManager.Instance.Ready)
             {
-                EventManager.Instance.GameStateEvents.OnGameInitialized += OnGameInitialized;
+                EventManager.Instance.GameStateEvents.OnGameInitialized += GameInitializedEventHandler;
+                EventManager.Instance.GameStateEvents.OnAttemptGameStart += AttemptGameStartEventHandler;
             }
 
             _isSetup = true;
         }
 
-        private void OnGameInitialized()
+        #endregion
+
+        #region Game Event Handlers
+
+        private void GameInitializedEventHandler()
         {
             if (EventManager.Instance != null && EventManager.Instance.Ready)
             {
-                EventManager.Instance.GameStateEvents.OnGameInitialized -= OnGameInitialized;
+                EventManager.Instance.GameStateEvents.OnGameInitialized -= GameInitializedEventHandler;
             }
 
-            Debug.Log("Game Initialization complete!", this);
+            if (_showDebug)
+            {
+                Debug.Log("Game Initialization complete!", this);
+            }
 
             ChangeGameState(GameState.Loading);
             ChangeScene(Constants.MENU_SCENE_NAME);
+        }
+
+        private void AttemptGameStartEventHandler()
+        {
+            if (_currentGameState != GameState.Menu && _currentGameState != GameState.GameOver)
+            {
+                Debug.LogWarning($"Attempt to start game while current state is {_currentGameState}", this);
+                return;
+            }
+
+            ChangeGameState(GameState.Loading);
+            ChangeScene(Constants.GAME_SCENE_NAME);
         }
 
         #endregion
@@ -49,16 +69,23 @@ namespace HoldOut
         private void ChangeScene(string sceneName)
         {
             SceneManager.activeSceneChanged += SceneManagerActiveSceneChangedEventHandler;
-            SceneManager.LoadSceneAsync(Constants.MENU_SCENE_NAME, LoadSceneMode.Single);
+            SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
         }
 
         private void SceneManagerActiveSceneChangedEventHandler(Scene oldScene, Scene newScene)
         {
             SceneManager.activeSceneChanged -= SceneManagerActiveSceneChangedEventHandler;
 
-            if (newScene != null && newScene.name.Equals(Constants.MENU_SCENE_NAME))
+            if (newScene != null)
             {
-                ChangeGameState(GameState.Menu);
+                if (newScene.name.Equals(Constants.MENU_SCENE_NAME))
+                {
+                    ChangeGameState(GameState.Menu);
+                }
+                else if (newScene.name.Equals(Constants.GAME_SCENE_NAME))
+                {
+                    ChangeGameState(GameState.Game);
+                }
             }
         }
 
@@ -81,7 +108,10 @@ namespace HoldOut
                 EventManager.Instance.GameStateEvents.RaiseGameStateChange(oldState, newState);
             }
 
-            Debug.Log($"Game state changed!\nOld state: {oldState}\nNew state: {newState}");
+            if (_showDebug)
+            {
+                Debug.Log($"Game state changed!\nOld state: {oldState}\nNew state: {newState}");
+            }
         }
 
         #endregion

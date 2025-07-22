@@ -6,15 +6,17 @@ namespace HoldOut
         Loading = 1,
         Menu = 2,
         Game = 3,
-        Pause = 4
+        Pause = 4,
+        GameOver = 5
     }
 
     public enum MenuType
     {
-        LoadingMenu = 0,
-        MainMenu = 1,
-        HUDMenu = 2,
-        PauseMenu = 3,
-        GameOverMenu = 4
+        Null = 0,
+        LoadingMenu = 1,
+        MainMenu = 2,
+        HUDMenu = 3,
+        PauseMenu = 4,
+        GameOverMenu = 5
     }
 }

@@ -32,5 +32,8 @@ namespace HoldOut
 
         public event Action<GameState, GameState> OnGameStateChanged;
         public void RaiseGameStateChange(GameState oldState, GameState newState) => OnGameStateChanged?.Invoke(oldState, newState);
+
+        public event Action OnAttemptGameStart;
+        public void RaiseAttemptGameStart() => OnAttemptGameStart?.Invoke();
     }
 }
