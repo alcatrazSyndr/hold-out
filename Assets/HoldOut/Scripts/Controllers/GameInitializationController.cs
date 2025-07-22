@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace HoldOut
 {
@@ -44,9 +43,9 @@ namespace HoldOut
                 yield return new WaitForEndOfFrame();
             }
 
-            if (GameManager.Instance != null && GameManager.Instance.Ready)
+            if (EventManager.Instance != null && EventManager.Instance.Ready)
             {
-                GameManager.Instance.PostGameInitialize();
+                EventManager.Instance.GameStateEvents.RaiseGameInitialized();
             }
             yield break;
         }

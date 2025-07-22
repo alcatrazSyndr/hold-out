@@ -23,6 +23,9 @@ namespace HoldOut
         protected bool _isSetup = false;
         public override bool Ready => _instance != null && _isInitialized && _isSetup;
 
+        [Header("Singleton Data")]
+        [SerializeField] protected bool _showDebug = false;
+
         public override void Initialize()
         {
             if (_instance == null)
@@ -41,7 +44,10 @@ namespace HoldOut
 
         protected virtual void Setup()
         {
-            //Debug.Log($"Manager of type:{GetType()} succesfully initialized!", this);
+            if (_showDebug)
+            {
+                Debug.Log($"Manager of type:{GetType()} succesfully initialized!", this);
+            }
         }
     }
 }
