@@ -9,12 +9,15 @@ namespace HoldOut
         [SerializeField] private float _movementAccelerationSmoothing = 1f;
         [SerializeField] private float _movementVelocityDeadzone = 1f;
         [SerializeField] private float _movementVelocityModifier = 1f;
+        [SerializeField] private float _cameraFollowTargetLerpAmount = 0.15f;
+        [SerializeField] private float _cameraFollowTargetDistanceLimit = 15f;
 
         [Header("Components")]
         [SerializeField] private CharacterController _characterController = null;
         [SerializeField] private Transform _lowerRootTransform = null;
         [SerializeField] private Transform _upperRootTransform = null;
         [SerializeField] private Transform _gunLevelTransform = null;
+        [SerializeField] private Transform _cameraFollowTargetTransform = null;
 
         [Header("Runtime")]
         [SerializeField] private Vector3 _currentTargetMovementVelocity = Vector3.zero;
@@ -22,6 +25,11 @@ namespace HoldOut
 
         private void Update()
         {
+            if (Time.timeScale <= 0f)
+            {
+                return;
+            }
+
             if (_currentTargetMovementVelocity != Vector3.zero)
             {
                 var targetRotation = Quaternion.LookRotation(_currentTargetMovementVelocity);
@@ -37,16 +45,29 @@ namespace HoldOut
                 direction.y = 0f;
 
                 _upperRootTransform.rotation = Quaternion.LookRotation(direction);
-            }
-        }
 
-        private void FixedUpdate()
-        {
-            _currentMovementVelocity = Vector3.Lerp(_currentMovementVelocity, _currentTargetMovementVelocity, Time.fixedDeltaTime * _movementAccelerationSmoothing);
+                // Limit the follow point's distance
+                Vector3 fromPosition = _lowerRootTransform.position;
+                Vector3 toPosition = hitPoint;
+                toPosition.y = 0f;
+
+                Vector3 offset = toPosition - fromPosition;
+                float maxDistance = _cameraFollowTargetDistanceLimit;
+
+                if (offset.magnitude > maxDistance)
+                {
+                    offset = offset.normalized * maxDistance;
+                    toPosition = fromPosition + offset;
+                }
+
+                _cameraFollowTargetTransform.position = Vector3.Lerp(fromPosition, toPosition, _cameraFollowTargetLerpAmount);
+            }
+
+            _currentMovementVelocity = Vector3.Lerp(_currentMovementVelocity, _currentTargetMovementVelocity, Time.timeScale * Time.deltaTime * _movementAccelerationSmoothing);
 
             if (_currentMovementVelocity.sqrMagnitude >= _movementVelocityDeadzone)
             {
-                _characterController.Move(_currentMovementVelocity * _movementVelocityModifier * Time.fixedDeltaTime);
+                _characterController.Move(_currentMovementVelocity * _movementVelocityModifier * Time.deltaTime * Time.timeScale);
             }
         }
 
@@ -56,6 +77,11 @@ namespace HoldOut
             {
                 EventManager.Instance.PlayerInputEvents.OnMovementInputChanged += MovementInputChangeEventHandler;
             }
+
+            if (CameraManager.Instance != null && CameraManager.Instance.Ready)
+            {
+                CameraManager.Instance.SetCameraFollowTarget(_cameraFollowTargetTransform);
+            }
         }
 
         private void OnDisable()
@@ -63,6 +89,11 @@ namespace HoldOut
             if (EventManager.Instance != null && EventManager.Instance.Ready)
             {
                 EventManager.Instance.PlayerInputEvents.OnMovementInputChanged -= MovementInputChangeEventHandler;
+            }
+
+            if (CameraManager.Instance != null && CameraManager.Instance.Ready)
+            {
+                CameraManager.Instance.SetCameraFollowTarget(null);
             }
         }
 
