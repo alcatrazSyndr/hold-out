@@ -6,6 +6,7 @@ namespace HoldOut
     {
         [Header("Data")]
         [SerializeField] private float _lowerRootRotationSmoothing = 1f;
+        [SerializeField] private float _upperRootRotationSmoothing = 1f;
         [SerializeField] private float _movementAccelerationSmoothing = 1f;
         [SerializeField] private float _movementVelocityDeadzone = 1f;
         [SerializeField] private float _movementVelocityModifier = 1f;
@@ -44,9 +45,8 @@ namespace HoldOut
                 var direction = hitPoint - _upperRootTransform.position;
                 direction.y = 0f;
 
-                _upperRootTransform.rotation = Quaternion.LookRotation(direction);
+                _upperRootTransform.rotation = Quaternion.Lerp(_upperRootTransform.rotation, Quaternion.LookRotation(direction), Time.deltaTime * _upperRootRotationSmoothing);
 
-                // Limit the follow point's distance
                 Vector3 fromPosition = _lowerRootTransform.position;
                 Vector3 toPosition = hitPoint;
                 toPosition.y = 0f;
