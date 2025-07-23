@@ -57,6 +57,7 @@ namespace HoldOut
 
         private void SetupMovementInput()
         {
+            _movementInput.started += MovementInputChangedHandler;
             _movementInput.performed += MovementInputChangedHandler;
             _movementInput.canceled += MovementInputChangedHandler;
             ToggleMovementInput(true);
