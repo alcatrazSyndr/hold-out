@@ -31,6 +31,11 @@ namespace HoldOut
         public void SetCameraFollowTarget(Transform followTarget)
         {
             _cameraFollowTarget = followTarget;
+
+            if (_cameraFollowTarget == null)
+            {
+                _cameraRootTransform.position = Vector3.zero;
+            }
         }
     }
 }
