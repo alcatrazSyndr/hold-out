@@ -25,6 +25,11 @@ namespace HoldOut
             {
                 EventManager.Instance.GameStateEvents.OnGameInitialized += GameInitializedEventHandler;
                 EventManager.Instance.GameStateEvents.OnAttemptGameStart += AttemptGameStartEventHandler;
+                EventManager.Instance.GameStateEvents.OnAttemptGameResume += AttemptGameResumeEventHandler;
+                EventManager.Instance.GameStateEvents.OnAttemptGameExit += AttemptGameExitEventHandler;
+                EventManager.Instance.GameStateEvents.OnAttemptGameRestart += AttemptGameRestartEventHandler;
+
+                EventManager.Instance.PlayerInputEvents.OnBackInput += PlayerBackInputEventHandler;
             }
 
             _isSetup = true;
@@ -60,6 +65,54 @@ namespace HoldOut
 
             ChangeGameState(GameState.Loading);
             ChangeScene(Constants.GAME_SCENE_NAME);
+        }
+
+        private void AttemptGameResumeEventHandler()
+        {
+            if (_currentGameState != GameState.Pause)
+            {
+                return;
+            }
+
+            ChangeGameState(GameState.Game);
+        }
+
+        private void AttemptGameRestartEventHandler()
+        {
+            if (_currentGameState != GameState.Pause)
+            {
+                return;
+            }
+
+            ChangeGameState(GameState.Loading);
+            ChangeScene(Constants.GAME_SCENE_NAME);
+        }
+
+        private void AttemptGameExitEventHandler()
+        {
+            if (_currentGameState != GameState.Pause)
+            {
+                return;
+            }
+
+            ChangeGameState(GameState.Loading);
+            ChangeScene(Constants.MENU_SCENE_NAME);
+        }
+
+        #endregion
+
+        #region Player Input Event Handlers
+
+        private void PlayerBackInputEventHandler()
+        {
+            if (_currentGameState == GameState.Game)
+            {
+                ChangeGameState(GameState.Pause);
+            }
+            else if (_currentGameState == GameState.Pause)
+            {
+                ChangeGameState(GameState.Game);
+            }
         }
 
         #endregion
@@ -112,6 +165,24 @@ namespace HoldOut
             {
                 Debug.Log($"Game state changed!\nOld state: {oldState}\nNew state: {newState}");
             }
+
+            if (newState == GameState.Pause || newState == GameState.GameOver)
+            {
+                SetTimeScale(0f);
+            }
+            else
+            {
+                SetTimeScale(1f);
+            }
+        }
+
+        #endregion
+
+        #region Time Management
+
+        private void SetTimeScale(float targetTimeScale)
+        {
+            Time.timeScale = targetTimeScale;
         }
 
         #endregion

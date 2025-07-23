@@ -74,7 +74,7 @@ namespace HoldOut
 
                 _scaledRectTransform.localScale = currentScale;
 
-                timer += Time.deltaTime;
+                timer += Time.unscaledDeltaTime;
                 yield return new WaitForEndOfFrame();
             }
 
