@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,6 +13,21 @@ namespace HoldOut
             get
             {
                 return _currentGameState;
+            }
+        }
+        [SerializeField] private PlayerController _playerController = null;
+        public float3 PlayerControllerPosition
+        {
+            get
+            {
+                if (_playerController != null)
+                {
+                    return _playerController.LastPosition;
+                }
+                else
+                {
+                    return float3.zero;
+                }
             }
         }
 
@@ -30,6 +46,9 @@ namespace HoldOut
                 EventManager.Instance.GameStateEvents.OnAttemptGameRestart += AttemptGameRestartEventHandler;
 
                 EventManager.Instance.PlayerInputEvents.OnBackInput += PlayerBackInputEventHandler;
+
+                EventManager.Instance.PlayerControllerEvents.OnPlayerControllerSpawned += PlayerControllerSpawnedEventHandler;
+                EventManager.Instance.PlayerControllerEvents.OnPlayerControllerDestroyed += PlayerControllerDestroyedEventHandler;
             }
 
             _isSetup = true;
@@ -113,6 +132,20 @@ namespace HoldOut
             {
                 ChangeGameState(GameState.Game);
             }
+        }
+
+        #endregion
+
+        #region Player Controller Event Handlers
+
+        private void PlayerControllerSpawnedEventHandler(PlayerController playerController)
+        {
+            _playerController = playerController;
+        }
+
+        private void PlayerControllerDestroyedEventHandler()
+        {
+            _playerController = null;
         }
 
         #endregion

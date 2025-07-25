@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace HoldOut
@@ -19,13 +20,30 @@ namespace HoldOut
         [SerializeField] private Transform _upperRootTransform = null;
         [SerializeField] private Transform _gunLevelTransform = null;
         [SerializeField] private Transform _cameraFollowTargetTransform = null;
+        public Transform CameraFollowTargetTransform
+        {
+            get
+            {
+                return _cameraFollowTargetTransform;
+            }
+        }
 
         [Header("Runtime")]
         [SerializeField] private Vector3 _currentTargetMovementVelocity = Vector3.zero;
         [SerializeField] private Vector3 _currentMovementVelocity = Vector3.zero;
+        [SerializeField] private float3 _lastPosition = float3.zero;
+        public float3 LastPosition
+        {
+            get
+            {
+                return _lastPosition;
+            }
+        }
 
         private void Update()
         {
+            _lastPosition = transform.position;
+
             if (Time.timeScale <= 0f)
             {
                 return;
@@ -76,11 +94,8 @@ namespace HoldOut
             if (EventManager.Instance != null && EventManager.Instance.Ready)
             {
                 EventManager.Instance.PlayerInputEvents.OnMovementInputChanged += MovementInputChangeEventHandler;
-            }
 
-            if (CameraManager.Instance != null && CameraManager.Instance.Ready)
-            {
-                CameraManager.Instance.SetCameraFollowTarget(_cameraFollowTargetTransform);
+                EventManager.Instance.PlayerControllerEvents.RaisePlayerControllerSpawned(this);
             }
         }
 
@@ -89,11 +104,8 @@ namespace HoldOut
             if (EventManager.Instance != null && EventManager.Instance.Ready)
             {
                 EventManager.Instance.PlayerInputEvents.OnMovementInputChanged -= MovementInputChangeEventHandler;
-            }
 
-            if (CameraManager.Instance != null && CameraManager.Instance.Ready)
-            {
-                CameraManager.Instance.SetCameraFollowTarget(null);
+                EventManager.Instance.PlayerControllerEvents.RaisePlayerControllerDestroyed();
             }
         }
 

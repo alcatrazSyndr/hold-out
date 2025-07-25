@@ -17,6 +17,12 @@ namespace HoldOut
         {
             base.Setup();
 
+            if (EventManager.Instance != null && EventManager.Instance.Ready)
+            {
+                EventManager.Instance.PlayerControllerEvents.OnPlayerControllerSpawned += PlayerControllerSpawnedEventHandler;
+                EventManager.Instance.PlayerControllerEvents.OnPlayerControllerDestroyed += PlayerControllerDestroyedEventHandler;
+            }
+
             _isSetup = true;
         }
 
@@ -28,7 +34,20 @@ namespace HoldOut
             }
         }
 
-        public void SetCameraFollowTarget(Transform followTarget)
+        private void PlayerControllerSpawnedEventHandler(PlayerController playerController)
+        {
+            if (playerController != null)
+            {
+                SetCameraFollowTarget(playerController.CameraFollowTargetTransform);
+            }
+        }
+
+        private void PlayerControllerDestroyedEventHandler()
+        {
+            SetCameraFollowTarget(null);
+        }
+
+        private void SetCameraFollowTarget(Transform followTarget)
         {
             _cameraFollowTarget = followTarget;
 

@@ -22,16 +22,34 @@ namespace HoldOut
                 return _playerInputEvents;
             }
         }
+        private PlayerControllerEvents _playerControllerEvents = null;
+        public PlayerControllerEvents PlayerControllerEvents
+        {
+            get
+            {
+                return _playerControllerEvents;
+            }
+        }
 
         protected override void Setup()
         {
             base.Setup();
 
+            _playerControllerEvents = new PlayerControllerEvents();
             _gameStateEvents = new GameStateEvents();
             _playerInputEvents = new PlayerInputEvents();
 
             _isSetup = true;
         }
+    }
+
+    public class PlayerControllerEvents
+    {
+        public event Action<PlayerController> OnPlayerControllerSpawned;
+        public void RaisePlayerControllerSpawned(PlayerController playerController) => OnPlayerControllerSpawned?.Invoke(playerController);
+
+        public event Action OnPlayerControllerDestroyed;
+        public void RaisePlayerControllerDestroyed() => OnPlayerControllerDestroyed?.Invoke();
     }
 
     public class PlayerInputEvents

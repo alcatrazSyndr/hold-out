@@ -18,7 +18,7 @@ namespace HoldOut
         [SerializeField] private Canvas _menuCanvas = null;
 
         [Header("Runtime")]
-        [SerializeField] private bool _isActive = false;
+        [SerializeField] protected bool _isActive = false;
 
         public void Show()
         {
