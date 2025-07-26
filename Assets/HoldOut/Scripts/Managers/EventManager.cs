@@ -62,6 +62,9 @@ namespace HoldOut
 
         public event Action<float> OnCameraScrollInputChanged;
         public void RaiseCameraScrollInputChange(float scrollInput) => OnCameraScrollInputChanged?.Invoke(scrollInput);
+
+        public event Action<bool> OnPrimaryAttackInputChanged;
+        public void RaisePrimaryAttackInputChange(bool attackInput) => OnPrimaryAttackInputChanged?.Invoke(attackInput);
     }
 
     public class GameStateEvents

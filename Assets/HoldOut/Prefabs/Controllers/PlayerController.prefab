@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &206668998580684213
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6129667074788693092}
+  m_Layer: 0
+  m_Name: BulletOrigin_Left
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6129667074788693092
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 206668998580684213}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.375, y: 1.335, z: 1.02}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3366473050137272796}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &488951513066329779
 GameObject:
   m_ObjectHideFlags: 0
@@ -296,13 +327,22 @@ MonoBehaviour:
   _movementVelocityModifier: 4
   _cameraFollowTargetLerpAmount: 0.04
   _cameraFollowTargetDistanceLimit: 15
+  _bulletFlightSpeed: 60
+  _bulletLifetime: 5
   _characterController: {fileID: 5081774275119339672}
   _lowerRootTransform: {fileID: 3884512593596871074}
   _upperRootTransform: {fileID: 3366473050137272796}
   _gunLevelTransform: {fileID: 5430821096354340025}
   _cameraFollowTargetTransform: {fileID: 2246928227156010521}
+  _bulletFlightOriginRightTransform: {fileID: 1528654486188953740}
+  _bulletFlightOriginLeftTransform: {fileID: 6129667074788693092}
   _currentTargetMovementVelocity: {x: 0, y: 0, z: 0}
   _currentMovementVelocity: {x: 0, y: 0, z: 0}
+  _lastPosition:
+    x: 0
+    y: 0
+    z: 0
+  _previousBulletOrigin: 0
 --- !u!143 &5081774275119339672
 CharacterController:
   m_ObjectHideFlags: 0
@@ -758,6 +798,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &5730714399168688010
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1528654486188953740}
+  m_Layer: 0
+  m_Name: BulletOrigin_Right
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1528654486188953740
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5730714399168688010}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.375, y: 1.335, z: 1.02}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3366473050137272796}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6015156782988914380
 GameObject:
   m_ObjectHideFlags: 0
@@ -1254,5 +1325,7 @@ Transform:
   - {fileID: 4467635971984467655}
   - {fileID: 1210069947984615526}
   - {fileID: 5430821096354340025}
+  - {fileID: 1528654486188953740}
+  - {fileID: 6129667074788693092}
   m_Father: {fileID: 5333914870428185564}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -5,10 +5,10 @@ namespace HoldOut
 {
     public class EnemySpawnerAuthoring : MonoBehaviour
     {
-        public GameObject enemyPrefab;
-        public int spawnCount = 100;
-        public float spawnCooldown = 0.1f;
-        public float spawnRadius = 30f;
+        public GameObject EnemyPrefab;
+        public int SpawnCount = 100;
+        public float SpawnCooldown = 0.1f;
+        public float SpawnRadius = 60f;
 
         class Baker : Baker<EnemySpawnerAuthoring>
         {
@@ -18,10 +18,10 @@ namespace HoldOut
 
                 AddComponent(entity, new EnemySpawnerComponent
                 {
-                    EnemyPrefab = GetEntity(authoring.enemyPrefab, TransformUsageFlags.Renderable),
-                    SpawnCount = authoring.spawnCount,
-                    SpawnCooldown = authoring.spawnCooldown,
-                    SpawnRadius = authoring.spawnRadius,
+                    EnemyPrefab = GetEntity(authoring.EnemyPrefab, TransformUsageFlags.Renderable),
+                    SpawnCount = authoring.SpawnCount,
+                    SpawnCooldown = authoring.SpawnCooldown,
+                    SpawnRadius = authoring.SpawnRadius,
                     Timer = 0f,
                     Spawned = 0
                 });

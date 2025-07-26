@@ -128,3 +128,20 @@ MonoBehaviour:
       m_Action: Camera Scroll Input
       m_Flags: 0
     m_Flags: 0
+  _primaryAttackInput:
+    m_Name: Primary Attack Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 5f20f222-1f39-4ac6-847e-77ee1fbf63d3
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 22d4345b-2442-4a27-b2f3-40be7da7fc7d
+      m_Path: <Mouse>/leftButton
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Primary Attack Input
+      m_Flags: 0
+    m_Flags: 0

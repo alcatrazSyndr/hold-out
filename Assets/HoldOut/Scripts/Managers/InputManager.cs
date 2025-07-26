@@ -9,6 +9,7 @@ namespace HoldOut
         [SerializeField] private InputAction _backInput = new InputAction();
         [SerializeField] private InputAction _movementInput = new InputAction();
         [SerializeField] private InputAction _cameraScrollInput = new InputAction();
+        [SerializeField] private InputAction _primaryAttackInput = new InputAction();
 
         #region Setup
 
@@ -19,6 +20,7 @@ namespace HoldOut
             SetupBackInput();
             SetupMovementInput();
             SetupCameraScrollInput();
+            SetupPrimaryAttackInput();
 
             _isSetup = true;
         }
@@ -112,6 +114,45 @@ namespace HoldOut
             if (EventManager.Instance != null && EventManager.Instance.Ready)
             {
                 EventManager.Instance.PlayerInputEvents.RaiseCameraScrollInputChange(obj.ReadValue<Vector2>().y);
+            }
+        }
+
+        #endregion
+
+        #region Primary Attack Input Logic
+
+        private void SetupPrimaryAttackInput()
+        {
+            _primaryAttackInput.started += PrimaryAttackInputStartedHandler;
+            _primaryAttackInput.canceled += PrimaryAttackInputCanceledHandler;
+            TogglePrimaryAttackInput(true);
+        }
+
+        private void TogglePrimaryAttackInput(bool toggle)
+        {
+            if (toggle)
+            {
+                _primaryAttackInput.Enable();
+            }
+            else
+            {
+                _primaryAttackInput.Disable();
+            }
+        }
+
+        private void PrimaryAttackInputStartedHandler(InputAction.CallbackContext obj)
+        {
+            if (EventManager.Instance != null && EventManager.Instance.Ready)
+            {
+                EventManager.Instance.PlayerInputEvents.RaisePrimaryAttackInputChange(true);
+            }
+        }
+
+        private void PrimaryAttackInputCanceledHandler(InputAction.CallbackContext obj)
+        {
+            if (EventManager.Instance != null && EventManager.Instance.Ready)
+            {
+                EventManager.Instance.PlayerInputEvents.RaisePrimaryAttackInputChange(false);
             }
         }
 
