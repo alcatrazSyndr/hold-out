@@ -2,7 +2,7 @@ using Unity.Entities;
 
 namespace HoldOut
 {
-    public struct MoveSpeed : IComponentData
+    public struct EnemyHealth : IComponentData
     {
         public float Value;
     }

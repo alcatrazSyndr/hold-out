@@ -18,6 +18,7 @@ namespace HoldOut
         [SerializeField] private float _cameraFollowTargetDistanceLimit = 15f;
         [SerializeField] private float _bulletFlightSpeed = 10f;
         [SerializeField] private float _bulletLifetime = 10f;
+        [SerializeField] private float _bulletImpactDamage = 50f;
 
         [Header("Components")]
         [SerializeField] private CharacterController _characterController = null;
@@ -139,7 +140,7 @@ namespace HoldOut
             if (attackInput)
             {
                 var origin = _previousBulletOrigin == 0 ? _bulletFlightOriginRightTransform : _bulletFlightOriginLeftTransform;
-                FirePrimaryAttack(origin.position, origin.forward, _bulletFlightSpeed, _bulletLifetime);
+                FirePrimaryAttack(origin.position, origin.forward, _bulletFlightSpeed, _bulletLifetime, _bulletImpactDamage);
             }
         }
 
@@ -176,7 +177,7 @@ namespace HoldOut
             }
         }
 
-        private void FirePrimaryAttack(Vector3 bulletOriginPosition, Vector3 bulletFlightDirection, float bulletSpeed, float bulletLifetime)
+        private void FirePrimaryAttack(Vector3 bulletOriginPosition, Vector3 bulletFlightDirection, float bulletSpeed, float bulletLifetime, float bulletDamage)
         {
             var bulletPrefabEntity = GetBulletPrefabEntity();
             if (bulletPrefabEntity == Entity.Null)
@@ -204,6 +205,11 @@ namespace HoldOut
             entityManager.SetComponentData(bullet, new BulletLifetime
             {
                 Value = bulletLifetime
+            });
+
+            entityManager.SetComponentData(bullet, new BulletImpactDamage
+            {
+                Value = bulletDamage
             });
 
             if (_previousBulletOrigin == 0)

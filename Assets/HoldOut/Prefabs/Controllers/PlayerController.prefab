@@ -328,7 +328,8 @@ MonoBehaviour:
   _cameraFollowTargetLerpAmount: 0.04
   _cameraFollowTargetDistanceLimit: 15
   _bulletFlightSpeed: 60
-  _bulletLifetime: 5
+  _bulletLifetime: 0.5
+  _bulletImpactDamage: 5
   _characterController: {fileID: 5081774275119339672}
   _lowerRootTransform: {fileID: 3884512593596871074}
   _upperRootTransform: {fileID: 3366473050137272796}

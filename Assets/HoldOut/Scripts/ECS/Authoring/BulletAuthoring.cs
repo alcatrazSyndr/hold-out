@@ -13,6 +13,7 @@ namespace HoldOut
                 AddComponent(entity, new BulletTag());
                 AddComponent(entity, new BulletVelocity());
                 AddComponent(entity, new BulletLifetime());
+                AddComponent(entity, new BulletImpactDamage());
             }
         }
     }

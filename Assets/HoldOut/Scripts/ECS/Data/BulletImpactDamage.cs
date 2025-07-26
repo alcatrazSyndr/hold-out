@@ -2,7 +2,7 @@ using Unity.Entities;
 
 namespace HoldOut
 {
-    public struct StopDistance : IComponentData
+    public struct BulletImpactDamage : IComponentData
     {
         public float Value;
     }

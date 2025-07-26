@@ -16,7 +16,7 @@ namespace HoldOut
         public float MinPlayerOffset;
         public float PushStrength;
 
-        void Execute(ref LocalTransform transform, in MoveSpeed speed, in StopDistance stopDist, in EnemyAvoidanceRadius avoidance)
+        void Execute(ref LocalTransform transform, in EnemyMoveSpeed speed, in EnemyStopDistance stopDist, in EnemyAvoidanceRadius avoidance)
         {
             float3 myPos = transform.Position;
             float3 toPlayer = PlayerPos - myPos;
