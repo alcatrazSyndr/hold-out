@@ -8,6 +8,7 @@ namespace HoldOut
         [Header("Input Actions")]
         [SerializeField] private InputAction _backInput = new InputAction();
         [SerializeField] private InputAction _movementInput = new InputAction();
+        [SerializeField] private InputAction _cameraScrollInput = new InputAction();
 
         #region Setup
 
@@ -17,6 +18,7 @@ namespace HoldOut
 
             SetupBackInput();
             SetupMovementInput();
+            SetupCameraScrollInput();
 
             _isSetup = true;
         }
@@ -80,6 +82,36 @@ namespace HoldOut
             if (EventManager.Instance != null && EventManager.Instance.Ready)
             {
                 EventManager.Instance.PlayerInputEvents.RaiseMovementInputChange(obj.ReadValue<Vector2>());
+            }
+        }
+
+        #endregion
+
+        #region Camera Scroll Input Logic
+
+        private void SetupCameraScrollInput()
+        {
+            _cameraScrollInput.performed += CameraScrollInputChangedHandler;
+            ToggleCameraScrollInput(true);
+        }
+
+        private void ToggleCameraScrollInput(bool toggle)
+        {
+            if (toggle)
+            {
+                _cameraScrollInput.Enable();
+            }
+            else
+            {
+                _cameraScrollInput.Disable();
+            }
+        }
+
+        private void CameraScrollInputChangedHandler(InputAction.CallbackContext obj)
+        {
+            if (EventManager.Instance != null && EventManager.Instance.Ready)
+            {
+                EventManager.Instance.PlayerInputEvents.RaiseCameraScrollInputChange(obj.ReadValue<Vector2>().y);
             }
         }
 

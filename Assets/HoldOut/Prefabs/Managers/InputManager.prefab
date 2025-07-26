@@ -111,3 +111,20 @@ MonoBehaviour:
       m_Action: Movement Input
       m_Flags: 8
     m_Flags: 0
+  _cameraScrollInput:
+    m_Name: Camera Scroll Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 56f27052-c1cf-4450-8fd6-91760fdfbd71
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: d44f484b-0e5b-4b45-ad8c-8e4ee39512ea
+      m_Path: <Mouse>/scroll
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Camera Scroll Input
+      m_Flags: 0
+    m_Flags: 0

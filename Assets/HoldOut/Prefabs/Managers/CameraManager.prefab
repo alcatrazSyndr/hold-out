@@ -29,7 +29,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5171988966063622424}
+  - {fileID: 2631229912498335997}
   m_Father: {fileID: 8808247505025864634}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &152117294950579236
@@ -91,12 +91,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 234668464185106958}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9040598769513940513}
+  m_Father: {fileID: 2631229912498335997}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &9085104954009286156
 Camera:
@@ -201,6 +201,38 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!1 &1243944210670902917
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2631229912498335997}
+  m_Layer: 0
+  m_Name: Camera_LinearTrack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2631229912498335997
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1243944210670902917}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5171988966063622424}
+  m_Father: {fileID: 9040598769513940513}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3447169518341442669
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,8 +312,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _showDebug: 0
   _cameraFollowSmoothing: 15
+  _maxCameraLinearTrackOffset: 10
+  _cameraLinearTrackSmoothing: 15
   _cameraRootTransform: {fileID: 823650703662766639}
+  _cameraLinearTrackTransform: {fileID: 2631229912498335997}
   _cameraFollowTarget: {fileID: 0}
+  _currentCameraZoom: 0
+  _currentCameraTargetZoom: 0
 --- !u!1 &7164653725660116542
 GameObject:
   m_ObjectHideFlags: 0

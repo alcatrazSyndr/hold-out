@@ -59,6 +59,9 @@ namespace HoldOut
 
         public event Action<Vector2> OnMovementInputChanged;
         public void RaiseMovementInputChange(Vector2 movementInput) => OnMovementInputChanged?.Invoke(movementInput);
+
+        public event Action<float> OnCameraScrollInputChanged;
+        public void RaiseCameraScrollInputChange(float scrollInput) => OnCameraScrollInputChanged?.Invoke(scrollInput);
     }
 
     public class GameStateEvents

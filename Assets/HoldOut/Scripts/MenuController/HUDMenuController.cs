@@ -11,6 +11,9 @@ namespace HoldOut
 
         [Header("Runtime")]
         [SerializeField] private float _deltaTime = 0f;
+        [SerializeField] private int _currentFrameStep = 0;
+        [SerializeField] private int _maxFrameStep = 3;
+        [SerializeField] private float _lastFPS = 0f;
 
         protected override void OnShow()
         {
@@ -31,7 +34,14 @@ namespace HoldOut
 
             // Calculate FPS
             _deltaTime += (Time.unscaledDeltaTime - _deltaTime) * 0.1f;
-            float fps = 1.0f / _deltaTime;
+            float fps = _lastFPS;
+            _currentFrameStep++;
+            if (_currentFrameStep >= _maxFrameStep)
+            {
+                fps = 1.0f / _deltaTime;
+                _currentFrameStep = 0;
+                _lastFPS = fps;
+            }
 
             // Get enemy count using ECS
             var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;

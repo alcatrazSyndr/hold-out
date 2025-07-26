@@ -164,8 +164,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 8229942095075793873, guid: d086f29f371115f4ea2350a3c1351642, type: 3}
-  spawnCount: 1000
-  spawnCooldown: 0.1
+  spawnCount: 100000
+  spawnCooldown: 0.005
   spawnRadius: 30
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
